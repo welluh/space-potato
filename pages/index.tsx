@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import NextLink from 'next/link';
 
 export default function Home() {
   return (
@@ -14,6 +15,10 @@ export default function Home() {
         <h1>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <NextLink href="/map">
+          Map
+        </NextLink>
 
         <p>
           Get started by editing{' '}
