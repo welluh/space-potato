@@ -10,21 +10,22 @@ const defaultProps = {
     lat: 60.16952,
     lng: 24.93545,
   },
-  zoom: 11,
+  zoom: 16,
 };
 
 export default function Map() {
-  const range = .1;
-  const limit = 20;
+  const range = 20;
+  const limit = 200;
   const params = qs.stringify({
     ...defaultProps.center,
-    range, 
+    range,
     limit,
   });
 
   const fetcher = (url: RequestInfo) => fetch(url).then((res) => res.json());
   const { data, error } = useSWR(`/api/places?${params}`, fetcher);
   const places = data?.data;
+  console.log(JSON.stringify(places));
   
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
@@ -39,7 +40,7 @@ export default function Map() {
       >
         {places.map((place: any, index: number) => {
           const { location } = place;
-          const { lat, lon: lng } = location;          
+          const { lat, lon: lng } = location;
 
           return (
             <Marker
