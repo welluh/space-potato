@@ -1,10 +1,121 @@
+@import '../../../styles/utilities/triangle';
+
 .marker {
-    padding: 1rem;
-    background-color: white;
+    width: 2rem;
+    padding: 1rem .85rem;
+    background-color: var(--color-primary);
+    position: relative;
+    z-index: 1;
+    transform: translate(calc(-50% + .85rem), -2rem);
+    border-radius: 50%;
+    filter: drop-shadow(1px 1px 4px hsla(0, 0, 0, .12));
+    transition: width 50ms ease-in, border-radius 50ms linear;
+
+    &:hover {
+        z-index: 5;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        width: .65rem;
+        height: .65rem;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+    }
+
+    &::after {
+        @include triangle('down', 1rem, .65rem, var(--color-primary));
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        z-index: 1;
+        transform: translate(-50%, 75%) scaleX(1.35) scaleY(1.75);
+        border-radius: 2px;
+    }
+}
+
+.markerActive {
+    width: 200px;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    transform: translate(calc(-50% + .85rem), -100%) scaleZ(1.5);
+    z-index: 5;
+    transition: width 150ms ease-out, border-radius 200ms linear;
     border-radius: 3px;
-    box-shadow: 1px 1px 12px 4px hsla(0, 0, 0, .08);
+    outline: 1px solid var(--color-primary);
+
+    .name {
+        display: none;
+    }
+
+    &::before {
+        display: none;
+    }
+
+    &::after {
+        @include triangle('down', 1rem, .65rem, #fff);
+    }
 }
 
 .name {
-    display: none;
+    display: block;
+    min-width: 100px;
+    margin-right: .25rem;
+    color: var(--color-primary);
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    font-size: .75rem;
+    text-align: right;
+    letter-spacing: .03rem;
+}
+
+.info {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+
+    h2 {
+        opacity: 0;
+        transform: translateY(1rem) scale(0);
+        transition: width 200ms linear, height 200ms linear;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
+
+.infoActive {
+    width: auto;
+    height: auto;
+    text-align: center;
+
+    h2 {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        transition: opacity 200ms linear, transform 200ms ease-out;
+        transition-delay: 150ms 150ms;
+    }
+}
+
+.hours {
+    margin-top: 1rem;
+
+    > div {
+        display: grid;
+        grid-template-columns: 1fr 6fr;
+        grid-column-gap: .15rem;
+        grid-row-gap: .1rem;
+        margin: auto;
+    }
+
+    span {
+        text-align: left;
+    }
 }
