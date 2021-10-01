@@ -105,15 +105,11 @@
 }
 
 .hours {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-column-gap: .15rem;
+    grid-row-gap: .1rem;
     margin-top: 1rem;
-
-    > div {
-        display: grid;
-        grid-template-columns: 1fr 6fr;
-        grid-column-gap: .15rem;
-        grid-row-gap: .1rem;
-        margin: auto;
-    }
 
     span {
         text-align: left;

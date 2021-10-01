@@ -1,0 +1,31 @@
+.drawer {
+    max-width: 24rem;
+    background-color: #fff;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    transform: translateX(-100%);
+    will-change: transform;
+    box-shadow: 2px 0 16px 2px hsla(0, 0, 0, .12), 4px 0 24px 4px hsla(0, 0, 0, .08);
+    transition: transform 175ms ease-in;
+    overflow: auto;
+}
+
+.drawerActive {
+    transform: translateX(0);
+    transition: transform 175ms ease-out;
+}
+
+.content {
+    padding: 4rem 2rem;
+}
+
+.name {
+    p {
+        font-size: .85rem;
+    }
+}
+
+.address {
+    
+}

@@ -1,25 +1,33 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './marker.module.scss';
 
+const weekdays = {
+    '1': 'Ma',
+    '2': 'Ti',
+    '3': 'Ke',
+    '4': 'To',
+    '5': 'Pe',
+    '6': 'La',
+    '7': 'Su',
+};
+
 export default function Marker(
-    { name, openingHours }: { lat: Number, lng: Number, name: String, openingHours: Object }
+    { place, name, openingHours, dispatch }: { place: Object, lat: Number, lng: Number, name: String, openingHours: Object, dispatch: Function }
 ) {
     const [ active, setActive ] = useState(false);
 
-    const weekdays = {
-        '1': 'Ma',
-        '2': 'Ti',
-        '3': 'Ke',
-        '4': 'To',
-        '5': 'Pe',
-        '6': 'La',
-        '7': 'Su',
-    };
+    function onClick() {
+        setActive(!active);
+        dispatch({
+            type: !active ? 'open' : 'close',
+            payload: { active: !active, place },
+        });
+    }
 
     return (
         <div 
             className={!active ? styles.marker : `${styles.marker} ${styles.markerActive}`} 
-            onClick={() => setActive(!active)}
+            onClick={onClick}
             tabIndex={0}
         >
             <div className={styles.name}>
@@ -30,22 +38,20 @@ export default function Marker(
                 <h2>{ name }</h2>
 
                 <div className={styles.hours}>
-                    <div>
-                        {
-                            openingHours?.hours?.filter(hours => !!hours.opens).map((hours: Object) => {
-                                return (
-                                    <>
-                                        <span>
-                                            {weekdays[hours.weekday_id]}:
-                                        </span>
-                                        <span>
-                                            {hours.opens} - {hours.closes}
-                                        </span>       
-                                    </>
-                                )
-                            })
-                        }
-                    </div>
+                    {
+                        openingHours?.hours?.filter(hours => !!hours.opens).map((hours: Object, index: number) => {
+                            return (
+                                <React.Fragment key={index}>
+                                    <span>
+                                        {weekdays[hours.weekday_id]}:
+                                    </span>
+                                    <span>
+                                        {hours.opens} - {hours.closes}
+                                    </span>       
+                                </React.Fragment>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
